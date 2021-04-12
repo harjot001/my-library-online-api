@@ -1,5 +1,6 @@
+const { resource } = require('../../server');
 var Models = require('./../models');
-var service = require('../services/libService')
+var service = require('./../services/libService')
 var searchResource = (req, res) =>{
 
 }
@@ -10,15 +11,12 @@ var searchResource = (req, res) =>{
  * @param {*} res 
  */
 var getResourceDetails = async (req, res) =>{
-    const id = req.params.resourceId   
-    try {
-    const resource = await Models.resource.findAll({
-        where: {resourceId: id}
-    })
-    res.json({ resource })
-     } catch(error) {
-    console.error(error)
-    }   
+    const id = req.params.resourceId;
+    let resource = await service.getResourceById(id);   
+    if(resource)
+        res.json({ resource })
+    else
+        res.json({message: 'The resource cannot be found'});
 }
 
 /**
