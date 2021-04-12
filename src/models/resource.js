@@ -36,6 +36,9 @@ module.exports = function (sequelize, DataTypes){
     });
 
     resource.removeAttribute('id');
+    resource.associate = models =>{
+        resource.hasMany(models.resourceCategory, {foreignKey: 'resourceid'})
+    }
 
     return resource;
 };

@@ -1,5 +1,5 @@
 module.exports = function (sequelize, DataTypes){
-    var membership = sequelize.define('Membership', {
+    var membership = sequelize.define('membership', {
         membershipId : {
             type:DataTypes.INTEGER,
             allowNull: false,

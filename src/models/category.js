@@ -1,5 +1,5 @@
 module.exports = function (sequelize, DataTypes){
-    var category = sequelize.define('Category', {
+    var category = sequelize.define('category', {
         categoryId : {
             type:DataTypes.INTEGER,
             allowNull: false,
@@ -20,6 +20,13 @@ module.exports = function (sequelize, DataTypes){
     });
 
     category.removeAttribute('id');
+    // category.associate = models =>{
+    //     category.hasMany(models.resourceCategory, {foreignKey: 'categoryid'})
+    // }
+    // resource.associate = models =>{
+    //  resource.hasMany(models.resourceCategory, {foreignKey: 'resourceid'})
+    // }
+
 
     return category;
 };

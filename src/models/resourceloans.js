@@ -1,5 +1,5 @@
 module.exports = function (sequelize, DataTypes){
-    var resourceLoan = sequelize.define('Resourceloan', {
+    var resourceLoan = sequelize.define('resourceLoan', {
         resourceLoanId : {
             type:DataTypes.INTEGER,
             allowNull: false,

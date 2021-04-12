@@ -6,8 +6,8 @@ var controller = require('../controllers/libController')
 module.exports = function(app, express){
 
     router.get('/resources/getResourceDetails/:resourceId', controller.getResourceDetails);
-    // router.get('/resources/browseResources', controller.getAllResources);
-    // router.get('/resources/searchResource/{criterion}/{searchKeyword}/{sortBy}', controller.searchResource);
+    router.get('/resources/browseResources', controller.browseResources);
+    router.get('/resources/searchResource/:criterion/:searchKeyword/:sortBy', controller.searchResources);
 
     app.use('/', router)
     

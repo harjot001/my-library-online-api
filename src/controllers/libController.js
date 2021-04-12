@@ -16,7 +16,7 @@ var getResourceDetails = async (req, res) =>{
     if(resource)
         res.json({ resource })
     else
-        res.json({message: 'The resource cannot be found'});
+        res.json({message: 'System error while retrieving the resource list, please try again'});
 }
 
 /**
@@ -24,12 +24,16 @@ var getResourceDetails = async (req, res) =>{
  * @param {*} req 
  * @param {*} res 
  */
-var getAllResources = (req, res) =>{
-
+var browseResources = async (req, res) =>{
+    let resourceList = await service.getAllResources();   
+    if(resourceList)
+        res.json({ resourceList })
+    else
+        res.json({message: 'System error while retrieving the resource list, please try again'});
 }
 
 /**
- * This control is used to lookup and return the list fo resources based on the given filter criteria
+ * This controller function searches for resources by given criterion and keyword
  * @param {*} req 
  * @param {*} res 
  */
@@ -38,6 +42,8 @@ var searchResources = (req, res) =>{
 }
 
 module.exports = {
-    getResourceDetails: getResourceDetails
+    getResourceDetails: getResourceDetails,
+    browseResources: browseResources,
+    searchResources: searchResources
 }
 
