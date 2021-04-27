@@ -7,7 +7,8 @@ module.exports = function(app, express){
 
     router.get('/resources/getResourceDetails/:resourceId', controller.getResourceDetails);
     router.get('/resources/browseResources', controller.browseResources);
-    router.get('/resources/searchResource/:criterion/:searchKeyword/:sortBy', controller.searchResources);
+    router.get('/resources/searchResource/:criterion/:searchKeyword', controller.searchResources);
+    // router.get('/resources/searchResource', controller.searchResources);
 
     app.use('/', router)
     

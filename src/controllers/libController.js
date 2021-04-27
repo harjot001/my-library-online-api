@@ -13,6 +13,7 @@ var searchResource = (req, res) =>{
 var getResourceDetails = async (req, res) =>{
     const id = req.params.resourceId;
     let resource = await service.getResourceById(id);   
+    res.header("Access-Control-Allow-Origin", "*"); 
     if(resource)
         res.json({ resource })
     else
@@ -25,7 +26,8 @@ var getResourceDetails = async (req, res) =>{
  * @param {*} res 
  */
 var browseResources = async (req, res) =>{
-    let resourceList = await service.getAllResources();   
+    let resourceList = await service.getAllResources();  
+    res.header("Access-Control-Allow-Origin", "*"); 
     if(resourceList)
         res.json({ resourceList })
     else
@@ -37,8 +39,13 @@ var browseResources = async (req, res) =>{
  * @param {*} req 
  * @param {*} res 
  */
-var searchResources = (req, res) =>{
-
+var searchResources = async (req, res) =>{
+    let resourceList = await service.findResources(req.params.criterion, req.params.searchKeyword, req.query.sortBy );  
+    res.header("Access-Control-Allow-Origin", "*"); 
+    if(resourceList)
+        res.json({ resourceList })
+    else
+        res.json({message: 'System error while retrieving the resource list, please try again'});
 }
 
 module.exports = {
