@@ -7,7 +7,8 @@ const db = {};
 const Sequelize = require('sequelize')
 
 /* Create sequelize project and connect to the database  */
-let sequelize = new Sequelize('postgres://postgres:admin@localhost:5432/libdb', {schema: 'librarydb'})
+// let sequelize = new Sequelize('postgres://postgres:admin@localhost:5432/libdb', {schema: 'librarydb'})
+let sequelize = new Sequelize('postgres://libdb_master:libdbsecret@librarydb.cr6rdvbhwp3p.us-east-1.rds.amazonaws.com:5432/libdb', {schema: 'librarydb'})
 sequelize
 .authenticate()
 .then(() => {
