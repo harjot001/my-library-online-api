@@ -26,7 +26,9 @@ var getResourceDetails = async (req, res) =>{
  * @param {*} res 
  */
 var browseResources = async (req, res) =>{
-    let resourceList = await service.getAllResources();  
+    let resourceList = [];
+    resourceList = await service.getAllResources();  
+    console.log('In controller');
     res.header("Access-Control-Allow-Origin", "*"); 
     if(resourceList)
         res.json({ resourceList })

@@ -27,27 +27,44 @@ var getResourceById = async (resourceId) =>{
  * @returns 
  */
 var getAllResources = async () =>{
-    try {
-        let query  = `select 
+    let result = [];
+    let query  = `select 
                      r.resourceid as "resourceId",
                      r.resourcename as "resourceName",
                      r.authorname as "authorName",
                      r.description as "description",
-                     r.publicationyear as "publicationYear",
-                     c.categoryid as "categoryId",
-                     c.categoryname as "categoryName"
+                     r.publicationyear as "publicationYear"
+
 
                      from librarydb.resources r join librarydb.resourcecategories rc on r.resourceid = rc.resourceid 
-                        join librarydb.categories c on c.categoryid = rc.categoryid`;
-        
-        let resourceList = await sequelize.query(query, {replacements: {}, type: sequelize.QueryTypes.SELECT})
+                        join librarydb.categories c on c.categoryid = rc.categoryid
+                        
+                        where rc.categoryid = :categoryId`;
+    try {
+        let categories = await Models.category.findAll();
+        console.log('Categories fetched');
+        if(categories){
 
-        return resourceList
+            await Promise.all(categories.map(async (category) => {
+                let resultItem = {};
+                resultItem["categoryName"] = category.categoryName;
+                let resourceList = await sequelize.query(query, {replacements: {categoryId : category.categoryId}, type: sequelize.QueryTypes.SELECT})
+                
+                if(resourceList)
+                    resultItem["resources"] = resourceList;   
+                result.push(resultItem);
+              }));
+       
+        }
+       
          } catch(error) {
             console.error(error)
             return null;
-        } 
+        }
+        console.log('Returning from service') 
+        return result;
     }
+   
 
 /**
  * This function looks up and returns the list of resources that match the given search keyword and criterion
@@ -86,7 +103,6 @@ var getAllResources = async () =>{
             
             
         var replacementObj = {};
-        // replacementObj.keyword = searchKeyword;
         
         let resourceList = await sequelize.query(query, {replacements: replacementObj, type: sequelize.QueryTypes.SELECT})
 
